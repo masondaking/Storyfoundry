@@ -1,99 +1,103 @@
-﻿# StoryFoundry
+# StoryFoundry
 
-StoryFoundry is a multi-model storytelling studio with a cinematic landing page, local auth, collaborative AI writing tools, and a shareable library. Generate scenes with OpenAI, Anthropic, Gemini, or DeepSeek, polish your draft with targeted feedback, publish it to the community shelf, and even create ElevenLabs narration on demand.
+A multi-model storytelling studio with cinematic animations, collaborative AI writing tools, and a community library.
 
-## Quick start
+## Live Demo
+
+Visit the live application at [masondaking.xyz](https://masondaking.xyz)
+
+## Features
+
+- **Multi-AI Support**: Generate content with OpenAI, Anthropic, Google Gemini, or DeepSeek
+- **Cinematic Landing**: Immersive animations and gradient effects
+- **Local Authentication**: Secure, browser-based user sessions
+- **AI Writing Studio**: Advanced prompt controls with tone, genre, and POV settings
+- **Smart Feedback**: Automated dialogue and structure analysis
+- **Text-to-Speech**: ElevenLabs integration for narration generation
+- **Community Library**: Share and discover stories with ratings and comments
+- **Debug Console**: Real-time request monitoring and troubleshooting
+
+## Quick Start
 
 ```bash
 npm install
 npm run dev
 ```
 
-Scripts:
+Open [http://localhost:5173](http://localhost:5173) to view the application.
 
-- `npm run dev` – start Vite dev server on http://localhost:5173
-- `npm run build` – type-check and create a production build
-- `npm run preview` – preview the production bundle locally
+## Scripts
 
-> **Note**: Dependencies are declared but not yet installed. Run `npm install` from the project root before starting the dev server.
+- `npm run dev` - Start development server
+- `npm run build` - Create production build
+- `npm run preview` - Preview production build locally
 
-## Bring your own API keys
+## API Configuration
 
-StoryFoundry keeps secrets in the browser. Before you can generate text, feedback, or narration:
+StoryFoundry requires API keys for full functionality:
 
-1. Open the Studio (`/studio`) and choose an AI provider.
-2. Paste your API key (OpenAI, Anthropic, Gemini, or DeepSeek) into the provider key field.
-3. Scroll to the "Narration voice" panel and paste your ElevenLabs key to unlock text-to-speech preview.
-4. Keys are cached in `localStorage` only—StoryFoundry never transmits them to a server.
+1. Navigate to `/studio` in the application
+2. Select your preferred AI provider
+3. Enter your API key (stored locally only)
+4. Add ElevenLabs key for text-to-speech features
 
-| Provider | Endpoint | Default model |
-| --- | --- | --- |
-| OpenAI | `POST https://api.openai.com/v1/chat/completions` | `gpt-4o-mini` |
-| Anthropic | `POST https://api.anthropic.com/v1/messages` | `claude-3-5-haiku-latest` |
-| Google Gemini | `POST https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent` | `gemini-1.5-flash` |
-| DeepSeek | `POST https://api.deepseek.com/chat/completions` | `deepseek-chat` |
-| ElevenLabs (TTS) | `POST https://api.elevenlabs.io/v1/text-to-speech/{voiceId}` | Configurable |
+### Supported Providers
 
-Custom providers can be registered in the UI, but no connector ships by default for security reasons.
+| Provider | Model | Endpoint |
+|----------|-------|----------|
+| OpenAI | gpt-4o-mini | `api.openai.com/v1/chat/completions` |
+| Anthropic | claude-3-5-haiku-latest | `api.anthropic.com/v1/messages` |
+| Google Gemini | gemini-1.5-flash | `generativelanguage.googleapis.com` |
+| DeepSeek | deepseek-chat | `api.deepseek.com/chat/completions` |
+| ElevenLabs | Various voices | `api.elevenlabs.io/v1/text-to-speech` |
 
-## Features
-
-- **Immersive landing experience** – Orbiting gradient animations, staged hero text, feature grid, workflow timeline, animated pricing, FAQ, and footer credit (“Made by Reno and Mason”).
-- **Local auth & security** – Hashed credentials, persistent sessions, guarded studio route, and local-only key storage.
-- **Story studio**
-  - Prompt builder with tone/genre/POV controls and per-provider model selection.
-  - Multi-AI generation, dialogue/structure feedback passes, and inline debug console logging.
-  - ElevenLabs narration controls with voice sliders, audio preview, and download/copy actions.
-  - Publish workflow with summary/tags, plus automatic persistence of narration defaults.
-- **Public library** – `/stories` showcases published tales with animated cards, average ratings, and quick navigation.
-- **Story detail view** – Full prose display, live ElevenLabs playback controls, star reviews, and community comment log.
-- **Debug console** – Toggle via navbar or `Alt + D`; filter requests/responses/errors and copy payloads for troubleshooting.
-
-## Project structure
+## Project Structure
 
 ```
-├── docs/
-│   └── architecture.md
-├── public/
-│   └── favicon.svg
+├── docs/                 # Documentation
+├── public/              # Static assets
 ├── src/
-│   ├── components/
-│   │   ├── debug/
-│   │   ├── library/
-│   │   ├── layout/
-│   │   ├── navigation/
-│   │   ├── tts/
-│   │   ├── ui/
-│   │   └── workspace/
-│   ├── context/
-│   ├── hooks/
-│   ├── lib/
-│   │   ├── clients/
-│   │   ├── prompts/
-│   │   └── tts/
-│   ├── pages/
-│   │   ├── Auth/
-│   │   ├── Landing/
-│   │   ├── Library/
-│   │   └── Workspace/
-│   ├── styles/
-│   └── utils/
+│   ├── components/      # React components
+│   │   ├── debug/       # Debug console
+│   │   ├── library/     # Story library
+│   │   ├── navigation/  # Navigation components
+│   │   ├── tts/         # Text-to-speech
+│   │   ├── ui/          # UI components
+│   │   └── workspace/   # Writing studio
+│   ├── context/         # React context providers
+│   ├── hooks/           # Custom React hooks
+│   ├── lib/             # Utility libraries
+│   ├── pages/           # Main application pages
+│   ├── styles/          # Styling files
+│   └── utils/           # Helper functions
 ├── index.html
 ├── package.json
 └── vite.config.ts
 ```
 
-Refer to [`docs/architecture.md`](docs/architecture.md) for a deeper breakdown of flows and module responsibilities.
+## Security & Privacy
 
-## Debugging & instrumentation
+- All API keys stored in browser localStorage only
+- No server-side data transmission
+- Local authentication with hashed credentials
+- Client-side session management
 
-- Every generation, feedback, publish, and narration request logs to the in-app console with sanitized payloads.
-- Use the "Debug" button in the navigation bar or press `Alt + D` to toggle the overlay.
-- Filter events (info/request/response/error), inspect payloads, copy JSON, or clear the feed.
+## Development
 
-## Roadmap suggestions
+Built with:
+- **React** + **TypeScript**
+- **Vite** for build tooling
+- **Tailwind CSS** for styling
+- **Local Storage** for data persistence
 
-- Sync published stories, reviews, and narration assets to a hosted backend for multi-device access.
-- Stream AI + TTS tokens in real time with cost telemetry and smarter retry heuristics for 429s.
-- Add collaborative editing, inline comments, and reader shelving/bookmarks.
-- Extend custom provider support with user-supplied headers/bodies and validation playgrounds.
+## Debug Features
+
+Press `Alt + D` or use the debug button to access:
+- Request/response logging
+- Error tracking
+- Payload inspection
+- Console filtering
+
+---
+
+**Made by Reno and Mason*
